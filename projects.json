@@ -1,0 +1,18 @@
+{
+  "managed": [
+    {
+      "name": "archalics-core",
+      "repo": "newssungoldentoday-dev/archalics",
+      "management": "Maintained",
+      "security": "Secure",
+      "quality": 98
+    },
+    {
+      "name": "archalics-cli",
+      "repo": "newssungoldentoday-dev/archalics-cli",
+      "management": "Active",
+      "security": "Secure",
+      "quality": 95
+    }
+  ]
+}
