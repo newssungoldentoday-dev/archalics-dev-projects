@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><!-- PLAYABLE_TOUCH_PATCH_V1 --><script>
+(function() {
+  if (window.__playableTouchPatchInstalled) return;
+  window.__playableTouchPatchInstalled = true;
+  var origAdd = EventTarget.prototype.addEventListener;
+  var blockedTypes = { touchstart: 1, touchmove: 1, wheel: 1 };
+  EventTarget.prototype.addEventListener = function(type, listener, options) {
+    if (blockedTypes[type]) {
+      if (options === undefined || options === null) {
+        options = { passive: true };
+      } else if (typeof options === 'boolean') {
+        options = { capture: options, passive: true };
+      } else {
+        options = Object.assign({}, options, { passive: true });
+      }
+    }
+    return origAdd.call(this, type, listener, options);
+  };
+})();
+</script><script>window.Intl=window.Intl||{};Intl.t=function(s){return(Intl._locale&&Intl._locale[s])||s;};</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>archalics-dev-projects — New Developer Projects Showcase</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#f4f4f5;font-family:Inter,ui-sans-serif,system-ui,sans-serif;antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 20px 32px;position:relative}
+.grid-bg{position:fixed;inset:0;pointer-events:none}
+.grid-bg .lines{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(#fff 1px, transparent 1px),linear-gradient(90deg,#fff 1px, transparent 1px);background-size:40px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:56px;gap:16px}
+.badge-a{width:32px;height:32px;background:#fff;color:#000;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-weight:700;font-size:11px;letter-spacing:.1em}
+.meta{font-family:monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#a1a1aa}
+.pill{font-family:monospace;font-size:10px;color:#71717a;border:1px solid rgba(255,255,255,.08);border-radius:9999px;padding:4px 12px;background:rgba(255,255,255,.03)}
+.hero{display:flex;justify-content:space-between;gap:24px;margin-bottom:32px;flex-wrap:wrap}
+.hero h1{font-size:56px;line-height:.9;letter-spacing:-.04em;font-weight:800;color:#fff}
+.hero h1 span{display:block;font-weight:200;color:#d4d4d8}
+.hero p{font-size:15px;line-height:1.6;color:#a1a1aa;max-width:420px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:48px}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.hero h1{font-size:32px}.top{margin-bottom:40px}}
+.card{background:#141414;border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.card-top{height:132px;position:relative;border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden}
+.card-top .glow{position:absolute;inset:0;opacity:.2}
+.card-top .floor{position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to top,rgba(0,0,0,.4),transparent)}
+.card-top .shadow{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:68%;height:20px;background:rgba(0,0,0,.4);filter:blur(10px);border-radius:9999px}
+.card-top .pedestal{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:72%;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,.06),rgba(255,255,255,.01));border-top:1px solid rgba(255,255,255,.08);border-radius:14px 14px 0 0}
+.icon-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.icon-blur{position:absolute;width:56px;height:56px;background:rgba(255,255,255,.1);filter:blur(18px);border-radius:9999px;transform:scale(1.5)}
+.icon{position:relative;width:56px;height:56px;border-radius:14px;background:#0a0a0a;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.5);color:#f4f4f5}
+.top-meta{position:absolute;top:0;left:0;right:0;padding:16px;display:flex;justify-content:space-between}
+.top-meta span{font-family:monospace;font-size:10px}
+.id{letter-spacing:.14em;color:#71717a}
+.status{padding:4px 8px;border-radius:9999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#d4d4d8}
+.content{padding:20px 24px 24px;flex:1;display:flex;flex-direction:column;gap:16px}
+.name{font-family:monospace;font-size:15px;font-weight:600;color:#fff;letter-spacing:-.01em}
+.desc{font-size:12.5px;line-height:1.6;color:#a1a1aa;min-height:60px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{padding:4px 10px;border-radius:9999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);font-family:monospace;font-size:10.5px;color:#a1a1aa}
+.specs{margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.specs label{font-family:monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#71717a;margin-bottom:4px;display:block}
+.val{font-family:monospace;font-size:12px;color:#e4e4e7;display:flex;align-items:center;gap:6px}
+.dot{width:6px;height:6px;border-radius:9999px}
+.bar{height:4px;width:40px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden}
+.bar div{height:100%;background:#fff}
+.footer-box{margin-top:40px;background:#121212;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="grid-bg"><div class="lines"></div></div>
+<div class="wrap">
+<div class="top">
+<div style="display:flex;align-items:center;gap:12px"><div class="badge-a">A</div><div style="width:1px;height:16px;background:rgba(255,255,255,.1)"></div><div class="meta">Open Source Management • Security • Code Quality • Developer Project</div></div>
+<div class="pill">ARCHA • SHOW 2025</div>
+</div>
+
+<div class="hero">
+<div><h1>New Developer Projects <span>Showcase</span></h1></div>
+<div style="max-width:420px;text-align:left"><p>Archa License Developer Projects — Discover projects built with Archa License. Curated, audited, ready to ship.</p><div style="margin-top:12px;display:flex;gap:8px;font-family:monospace;font-size:10px;color:#71717a"><span style="display:flex;align-items:center;gap:6px"><span style="width:4px;height:4px;border-radius:9999px;background:#34d399;display:inline-block"></span>6 units on display</span><span>•</span><span>static gallery</span></div></div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,rgba(255,255,255,.1),rgba(255,255,255,.06),transparent);margin-bottom:28px"></div>
+
+<div class="grid">
+<!-- 01 -->
+<div class="card">
+<div class="card-top" style="background:linear-gradient(to bottom,rgba(79,70,229,.2),rgba(79,70,229,.05))">
+<div class="floor"></div><div class="shadow"></div><div class="pedestal"></div>
+<div class="top-meta"><span class="id">01 / SHOW UNIT</span><span class="status">Maintained</span></div>
+<div class="icon-wrap"><div class="icon-blur"></div><div class="icon">◧</div></div>
+</div>
+<div class="content">
+<div><div class="name">archalics-core</div><div class="desc">Foundation runtime for Archa-licensed apps. High-performance core with typed plugins and deterministic builds.</div></div>
+<div class="tags"><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">Rust</span></div>
+<div class="specs">
+<div><label>Management</label><div class="val"><span class="dot" style="background:#34d399"></span>Maintained</div></div>
+<div><label>Security</label><div class="val"><span class="dot" style="background:#4f46e5"></span>Secure</div></div>
+<div><label>Quality</label><div class="val"><div class="bar"><div style="width:98%"></div></div>98<span style="color:#71717a">/100</span></div></div>
+</div>
+</div>
+</div>
+<!-- 02 -->
+<div class="card">
+<div class="card-top" style="background:linear-gradient(to bottom,rgba(16,185,129,.2),rgba(16,185,129,.05))">
+<div class="floor"></div><div class="shadow"></div><div class="pedestal"></div>
+<div class="top-meta"><span class="id">02 / SHOW UNIT</span><span class="status">Active</span></div>
+<div class="icon-wrap"><div class="icon-blur"></div><div class="icon">>_</div></div>
+</div>
+<div class="content">
+<div><div class="name">archalics-cli</div><div class="desc">Unified CLI for scaffolding, license checks, and repo maintenance across all Archa projects.</div></div>
+<div class="tags"><span class="tag">TypeScript</span><span class="tag">Commander</span><span class="tag">Ink</span></div>
+<div class="specs">
+<div><label>Management</label><div class="val"><span class="dot" style="background:#34d399"></span>Active</div></div>
+<div><label>Security</label><div class="val"><span class="dot" style="background:#4f46e5"></span>Secure</div></div>
+<div><label>Quality</label><div class="val"><div class="bar"><div style="width:95%"></div></div>95<span style="color:#71717a">/100</span></div></div>
+</div>
+</div>
+</div>
+<!-- 03 -->
+<div class="card">
+<div class="card-top" style="background:linear-gradient(to bottom,rgba(245,158,11,.2),rgba(245,158,11,.05))">
+<div class="floor"></div><div class="shadow"></div><div class="pedestal"></div>
+<div class="top-meta"><span class="id">03 / SHOW UNIT</span><span class="status">Maintained</span></div>
+<div class="icon-wrap"><div class="icon-blur"></div><div class="icon">◫</div></div>
+</div>
+<div class="content">
+<div><div class="name">archalics-docs-site</div><div class="desc">Docs engine with MDX, versioning, and Archa license attribution built-in. Optimized for search.</div></div>
+<div class="tags"><span class="tag">MDX</span><span class="tag">Next.js</span><span class="tag">Tailwind</span></div>
+<div class="specs">
+<div><label>Management</label><div class="val"><span class="dot" style="background:#34d399"></span>Maintained</div></div>
+<div><label>Security</label><div class="val"><span class="dot" style="background:#4f46e5"></span>Secure</div></div>
+<div><label>Quality</label><div class="val"><div class="bar"><div style="width:92%"></div></div>92<span style="color:#71717a">/100</span></div></div>
+</div>
+</div>
+</div>
+<!-- 04 -->
+<div class="card">
+<div class="card-top" style="background:linear-gradient(to bottom,rgba(244,63,94,.2),rgba(244,63,94,.05))">
+<div class="floor"></div><div class="shadow"></div><div class="pedestal"></div>
+<div class="top-meta"><span class="id">04 / SHOW UNIT</span><span class="status">Active</span></div>
+<div class="icon-wrap"><div class="icon-blur"></div><div class="icon">🛡</div></div>
+</div>
+<div class="content">
+<div><div class="name">archalics-security-scanner</div><div class="desc">Continuous dependency audit, secret detection, and SBOM generation for supply-chain safety.</div></div>
+<div class="tags"><span class="tag">Go</span><span class="tag">Snyk SDK</span><span class="tag">Gitleaks</span></div>
+<div class="specs">
+<div><label>Management</label><div class="val"><span class="dot" style="background:#34d399"></span>Active</div></div>
+<div><label>Security</label><div class="val"><span class="dot" style="background:#4f46e5"></span>Secure</div></div>
+<div><label>Quality</label><div class="val"><div class="bar"><div style="width:96%"></div></div>96<span style="color:#71717a">/100</span></div></div>
+</div>
+</div>
+</div>
+<!-- 05 -->
+<div class="card">
+<div class="card-top" style="background:linear-gradient(to bottom,rgba(139,92,246,.2),rgba(139,92,246,.05))">
+<div class="floor"></div><div class="shadow"></div><div class="pedestal"></div>
+<div class="top-meta"><span class="id">05 / SHOW UNIT</span><span class="status">Maintained</span></div>
+<div class="icon-wrap"><div class="icon-blur"></div><div class="icon">◎</div></div>
+</div>
+<div class="content">
+<div><div class="name">archalics-quality-engine</div><div class="desc">Lint, format, complexity and coverage gates. One binary to enforce code quality everywhere.</div></div>
+<div class="tags"><span class="tag">Biome</span><span class="tag">ESLint</span><span class="tag">Vitest</span></div>
+<div class="specs">
+<div><label>Management</label><div class="val"><span class="dot" style="background:#34d399"></span>Maintained</div></div>
+<div><label>Security</label><div class="val"><span class="dot" style="background:#4f46e5"></span>Secure</div></div>
+<div><label>Quality</label><div class="val"><div class="bar"><div style="width:94%"></div></div>94<span style="color:#71717a">/100</span></div></div>
+</div>
+</div>
+</div>
+<!-- 06 -->
+<div class="card">
+<div class="card-top" style="background:linear-gradient(to bottom,rgba(113,113,122,.2),rgba(113,113,122,.05))">
+<div class="floor"></div><div class="shadow"></div><div class="pedestal"></div>
+<div class="top-meta"><span class="id">06 / SHOW UNIT</span><span class="status">Active</span></div>
+<div class="icon-wrap"><div class="icon-blur"></div><div class="icon">◰</div></div>
+</div>
+<div class="content">
+<div><div class="name">community-starter-template</div><div class="desc">Minimal starter for new Archa projects. Prewired with license header, CI, and quality presets.</div></div>
+<div class="tags"><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">pnpm</span></div>
+<div class="specs">
+<div><label>Management</label><div class="val"><span class="dot" style="background:#34d399"></span>Active</div></div>
+<div><label>Security</label><div class="val"><span class="dot" style="background:#4f46e5"></span>Secure</div></div>
+<div><label>Quality</label><div class="val"><div class="bar"><div style="width:90%"></div></div>90<span style="color:#71717a">/100</span></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="footer-box">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:32px;height:32px;border-radius:9999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;background:#a1a1aa;border-radius:9999px"></div></div>
+<div><div style="font-family:monospace;font-size:12px;color:#d4d4d8">Archa License • Exhibition Floor</div><div style="font-family:monospace;font-size:11px;color:#71717a">All projects verified • No external calls • Static gallery</div></div>
+</div>
+<div style="font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#52525b">6 projects • 18 tags • avg quality 94.2/100</div>
+</div>
+
+<div style="margin-top:24px;border-top:1px solid rgba(255,255,255,.06);padding-top:20px;display:flex;justify-content:space-between;font-family:monospace;font-size:11px;color:#52525b"><span>archalics-dev-projects • showcase edition</span><span>© 2026 Archa License</span></div>
+</div>
+</body>
+                           </html>
+                                                              
