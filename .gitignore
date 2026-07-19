@@ -1,0 +1,8 @@
+# archalics-dev-projects - Developer Project Tool
+node_modules/
+dist/
+.env
+.DS_Store
+*.log
+coverage/
+.vscode/
