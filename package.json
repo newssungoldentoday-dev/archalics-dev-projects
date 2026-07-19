@@ -1,0 +1,20 @@
+{
+  "name": "archalics-dev-projects",
+  "version": "1.0.0",
+  "description": "Archa License Developer Project - Open Source Management, Security, Code Quality, Developer Project Tool",
+  "main": "tools/manager.js",
+  "scripts": {
+    "manage": "node tools/manager.js",
+    "security": "node tools/security.js",
+    "quality": "node tools/quality.js",
+    "audit": "node tools/manager.js && node tools/security.js && node tools/quality.js",
+    "showcase": "echo 'Open showcase: index.html'"
+  },
+  "keywords": ["archa-license", "open-source-management", "security", "code-quality", "developer-project"],
+  "author": "newssungoldentoday-dev <Rogge Ramos> (Baguio City, PH)",
+  "license": "Archa License Community Edition",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/newssungoldentoday-dev/archalics-dev-projects.git"
+  }
+}
